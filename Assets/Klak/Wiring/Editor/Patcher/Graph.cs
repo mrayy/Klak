@@ -119,9 +119,10 @@ namespace Klak.Wiring.Patcher
             // Scan the patch if available.
             if (_patch != null)
             {
+				
                 // Enumerate all the node instances.
                 foreach (var i in _patch.GetComponentsInChildren<Wiring.NodeBase>())
-                    AddNode(Node.Create(i));
+					AddNode(Node.Create(i,NodeRendererMap.GetRenderer(i.GetType())));
 
                 // Enumerate all the edges.
                 foreach (Node node in nodes)

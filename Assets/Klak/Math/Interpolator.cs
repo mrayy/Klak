@@ -26,7 +26,7 @@ using System;
 
 namespace Klak.Math
 {
-    public struct FloatInterpolator
+    public class FloatInterpolator
     {
         #region Nested Public Classes
 

@@ -160,26 +160,22 @@ namespace Klak.Wiring.Patcher
             }
         }
 
+		/// <summary>
+		/// This function renders individuals nodes
+		/// </summary>
+		/// <param name="node">Node.</param>
         public override void NodeGUI(Graphs.Node node)
         {
             SelectNode(node);
 
-            foreach (var slot in node.inputSlots)
-                LayoutSlot(slot, slot.title, false, true, true, Styles.pinIn);
-
-            node.NodeUI(this);
-
-            foreach (var slot in node.outputSlots)
-            {
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.FlexibleSpace();
-                LayoutSlot(slot, slot.title, true, false, true, Styles.pinOut);
-                EditorGUILayout.EndHorizontal();
-            }
+			(node as Node).OnNodeUI (this);
 
             DragNodes();
         }
 
+		/// <summary>
+		/// Render Graph
+		/// </summary>
         public override void OnGraphGUI()
         {
             // Show node subwindows.
@@ -284,7 +280,7 @@ namespace Klak.Wiring.Patcher
             gameObject.transform.parent = ((Graph)graph).patch.transform;
 
             // Add it to the graph.
-            var node = Node.Create(nodeRuntime);
+			var node = Node.Create(nodeRuntime,NodeRendererMap.GetRenderer(type));
             node.position = new Rect((Vector2)m_contextMenuMouseDownPosition, Vector2.zero);
             node.Dirty();
             graph.AddNode(node);

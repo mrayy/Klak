@@ -36,12 +36,33 @@ namespace Klak.Wiring.Patcher
         #region Public class methods
 
         // Factory method
-        static public Node Create(Wiring.NodeBase runtimeInstance)
+
+		static public Node Create(Wiring.NodeBase runtimeInstance, Type renderer) 
         {
-            var node = CreateInstance<Node>();
+			
+			var node = CreateInstance(renderer) as Node;
             node.Initialize(runtimeInstance);
             return node;
         }
+
+
+		public virtual void OnNodeUI (GraphGUI host)
+		{
+
+			foreach (var slot in this.inputSlots)
+				host.LayoutSlot(slot, slot.title, false, true, true, Styles.pinIn);
+
+			base.NodeUI (host);
+
+			foreach (var slot in this.outputSlots)
+			{
+				EditorGUILayout.BeginHorizontal();
+				GUILayout.FlexibleSpace();
+				host.LayoutSlot(slot, slot.title, true, false, true, Styles.pinOut);
+				EditorGUILayout.EndHorizontal();
+			}
+
+		}
 
         #endregion
 
