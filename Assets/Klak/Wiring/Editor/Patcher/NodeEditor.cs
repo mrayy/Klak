@@ -78,7 +78,7 @@ namespace Klak.Wiring.Patcher
             EditorGUILayout.Space();
 
             // Node properties
-            _editor.OnInspectorGUI();
+			_editor.OnInspectorGUI();
         }
     }
 }

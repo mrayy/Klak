@@ -215,6 +215,7 @@ namespace Klak.Wiring.Patcher
             // Context menu
             ShowCustomContextMenu();
             HandleMenuEvents();
+			EditorUtility.SetDirty (this);
         }
 
         #endregion

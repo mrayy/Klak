@@ -38,18 +38,21 @@ namespace Klak.Wiring
 
         #region Node I/O
 
-        [SerializeField, Outlet]
-        FloatEvent _xEvent = new FloatEvent();
+		[SerializeField]
+		public Transform linkedObject;
 
         [SerializeField, Outlet]
-        FloatEvent _yEvent = new FloatEvent();
+		public FloatEvent _xEvent = new FloatEvent();
+
+        [SerializeField, Outlet]
+		public FloatEvent _yEvent = new FloatEvent();
 
         #endregion
 
         #region MonoBehaviour functions
 
-        FloatInterpolator _xValue;
-        FloatInterpolator _yValue;
+		public FloatInterpolator _xValue;
+		public FloatInterpolator _yValue;
 
         void Start()
         {

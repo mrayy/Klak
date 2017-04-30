@@ -122,6 +122,7 @@ namespace Klak.Wiring.Patcher
             GUILayout.BeginArea(new Rect(0, height - kBarHeight, width, kBarHeight));
             GUILayout.Label(_graph.patch.name);
             GUILayout.EndArea();
+
         }
 
         #endregion

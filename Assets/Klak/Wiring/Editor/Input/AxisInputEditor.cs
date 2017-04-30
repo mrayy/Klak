@@ -32,13 +32,15 @@ namespace Klak.Wiring
     {
         SerializedProperty _axisName;
         SerializedProperty _interpolator;
-        SerializedProperty _valueEvent;
+		SerializedProperty _valueEvent ;
+        SerializedProperty _value;
 
         void OnEnable()
         {
             _axisName = serializedObject.FindProperty("_axisName");
             _interpolator = serializedObject.FindProperty("_interpolator");
-            _valueEvent = serializedObject.FindProperty("_valueEvent");
+			_valueEvent = serializedObject.FindProperty("_valueEvent");
+			_value = serializedObject.FindProperty("_val");
         }
 
         public override void OnInspectorGUI()
@@ -46,7 +48,8 @@ namespace Klak.Wiring
             serializedObject.Update();
 
             EditorGUILayout.PropertyField(_axisName);
-            EditorGUILayout.PropertyField(_interpolator);
+			EditorGUILayout.PropertyField(_interpolator);
+			EditorGUILayout.PropertyField(_value);
 
             EditorGUILayout.Space();
 

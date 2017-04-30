@@ -42,6 +42,8 @@ namespace Klak.Wiring
         {
             if (GUILayout.Button("Open Patcher", "LargeButton"))
                 Patcher.PatcherWindow.OpenPatch((Patch)target);
+
         }
     }
+
 }

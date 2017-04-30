@@ -32,7 +32,7 @@ namespace Klak.Wiring
         #region Editable properties
 
         [SerializeField]
-        string _axisName = "Horizontal";
+        public string _axisName = "Horizontal";
 
         [SerializeField]
         FloatInterpolator.Config _interpolator;
@@ -50,6 +50,16 @@ namespace Klak.Wiring
 
         FloatInterpolator _axisValue;
 
+		[SerializeField]
+		float _val;
+
+		public float Value
+		{
+			get{
+				return _val;
+			}
+		}
+
         void Start()
         {
             _axisValue = new FloatInterpolator(0, _interpolator);
@@ -58,7 +68,7 @@ namespace Klak.Wiring
         void Update()
         {
             _axisValue.targetValue = Input.GetAxis(_axisName);
-            _valueEvent.Invoke(_axisValue.Step());
+			_valueEvent.Invoke(_val=_axisValue.Step());
         }
 
         #endregion

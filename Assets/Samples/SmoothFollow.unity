@@ -862,7 +862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3f83148b3a62d48a80020745f6100d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wiringNodePosition: {x: 355, y: 61}
+  _wiringNodePosition: {x: 360, y: 24}
   _stateCount: 3
   _value1: 0
   _value2: 1

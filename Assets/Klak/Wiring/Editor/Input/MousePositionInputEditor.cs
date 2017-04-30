@@ -23,6 +23,8 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
+using Klak.Wiring;
 
 namespace Klak.Wiring
 {
@@ -30,13 +32,15 @@ namespace Klak.Wiring
     [CustomEditor(typeof(MousePositionInput))]
     public class MousePositionInputEditor : Editor
     {
+		SerializedProperty _object;
         SerializedProperty _interpolator;
         SerializedProperty _xEvent;
         SerializedProperty _yEvent;
 
         void OnEnable()
         {
-            _interpolator = serializedObject.FindProperty("_interpolator");
+			_object = serializedObject.FindProperty("linkedObject");
+			_interpolator = serializedObject.FindProperty("_interpolator");
             _xEvent = serializedObject.FindProperty("_xEvent");
             _yEvent = serializedObject.FindProperty("_yEvent");
         }
@@ -45,6 +49,7 @@ namespace Klak.Wiring
         {
             serializedObject.Update();
 
+			EditorGUILayout.PropertyField(_object);
             EditorGUILayout.PropertyField(_interpolator);
 
             EditorGUILayout.Space();
@@ -56,3 +61,26 @@ namespace Klak.Wiring
         }
     }
 }
+
+[NodeRendererAttribute(typeof(MousePositionInput))]
+public class MouseInputNodeRenderer : Node {
+
+	public override void OnNodeUI (GraphGUI host)
+	{ 
+
+		base.OnNodeUI (host);
+		var e=this.runtimeInstance as MousePositionInput;
+		if(e.linkedObject!=null)
+			GUILayout.Box ("Linked To:"+ e.linkedObject.name);
+		if(e._xValue!=null)
+			GUILayout.Box (e._xValue.targetValue.ToString());
+		if(e._yValue!=null)
+			GUILayout.Box (e._yValue.targetValue.ToString());
+	}
+}
+
+[CustomEditor(typeof(MouseInputNodeRenderer))]
+class MouseInputNodeRendererEditor : NodeEditor
+{
+}
+
