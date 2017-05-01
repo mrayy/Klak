@@ -23,6 +23,8 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -30,4 +32,24 @@ namespace Klak.Wiring
     public class FloatOutEditor : GenericOutEditor<float>
     {
     }
+}
+
+[NodeRendererAttribute(typeof(FloatOut))]
+public class FloatOutNodeRenderer : Node {
+	public FloatOutNodeRenderer()
+	{
+		//	this.color = UnityEditor.Graphs.Styles.Color.Red;
+
+	}
+	public override void OnNodeUI (GraphGUI host)
+	{ 
+		base.OnNodeUI (host);
+		var e=this.runtimeInstance as FloatOut;
+
+		GUILayout.BeginHorizontal ();
+		GUILayout.Label ("Value");
+		GUILayout.Box (e.input.ToString(), new GUILayoutOption[] { GUILayout.MaxWidth (64), GUILayout.MaxHeight (64) });
+		GUILayout.EndHorizontal ();
+
+	}
 }

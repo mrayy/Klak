@@ -140,7 +140,8 @@ namespace Klak.Wiring.Patcher
         // Check if slots can be connected.
         public override bool CanConnect(Graphs.Slot fromSlot, Graphs.Slot toSlot)
         {
-            // If the outlet is bang, any inlet can be connected.
+
+			// If the outlet is bang, any inlet can be connected.
             if (fromSlot.dataType == null) return true;
             // Apply simple type matching.
             return fromSlot.dataType == toSlot.dataType;

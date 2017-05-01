@@ -189,6 +189,7 @@ namespace Klak.Wiring.Patcher
                 // Subwindow style (active/nonactive)
                 var isActive = selection.Contains(node);
                 var style = Graphs.Styles.GetNodeStyle(node.style, node.color, isActive);
+				style.fontStyle = FontStyle.Bold;
 
                 // Show the subwindow of this node.
                 node.position = GUILayout.Window(

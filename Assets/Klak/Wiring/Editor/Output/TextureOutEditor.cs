@@ -15,6 +15,7 @@ namespace Klak.Wiring
 		void OnEnable()
 		{
 			_texture = serializedObject.FindProperty("tex");
+
 		}
 
 		public override void OnInspectorGUI()
@@ -32,13 +33,21 @@ namespace Klak.Wiring
 public class TextureOutputNodeRenderer : Node {
 	public TextureOutputNodeRenderer()
 	{
-		this.color = UnityEditor.Graphs.Styles.Color.Red;
+	//	this.color = UnityEditor.Graphs.Styles.Color.Red;
+
 	}
+
+	bool slots_updated=false;
 	public override void OnNodeUI (GraphGUI host)
 	{ 
 		base.OnNodeUI (host);
 		var e=this.runtimeInstance as TextureOutput;
 		var tex = e.tex;
+		if (!slots_updated) {
+			AddInputSlot("Test",typeof(Texture));
+
+			slots_updated = true;
+		}
 
 		// TODO: Check if texture is readable
 
@@ -46,6 +55,12 @@ public class TextureOutputNodeRenderer : Node {
 		GUILayout.Label ("Texture");
 		GUILayout.Box (tex, new GUILayoutOption[] { GUILayout.Width (64), GUILayout.Height (64) });
 		GUILayout.EndHorizontal ();
+
+		var v=GetSlotValue ("Test");
+		if (v) {
+			//GUILayout.Box (v, new GUILayoutOption[] { GUILayout.Width (64), GUILayout.Height (64) });
+		}
+
 
 	}
 }

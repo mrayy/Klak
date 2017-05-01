@@ -23,6 +23,7 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -36,14 +37,19 @@ namespace Klak.Wiring
             var go = new GameObject("Patch");
             go.AddComponent<Patch>();
             Selection.activeGameObject = go;
+
         }
+
+		PatcherWindow _window;
 
         public override void OnInspectorGUI()
         {
+			
             if (GUILayout.Button("Open Patcher", "LargeButton"))
-                Patcher.PatcherWindow.OpenPatch((Patch)target);
+                _window=Patcher.PatcherWindow.OpenPatch((Patch)target);
 
         }
+
     }
 
 }

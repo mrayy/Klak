@@ -32,11 +32,12 @@ namespace Klak.Wiring.Patcher
         #region Class methods
 
         // Open the patcher window with a given patch.
-        public static void OpenPatch(Wiring.Patch patch)
+		public static PatcherWindow OpenPatch(Wiring.Patch patch)
         {
             var window = EditorWindow.GetWindow<PatcherWindow>("Patcher");
             window.Initialize(patch);
             window.Show();
+			return window;
         }
 
         // Open from the main menu (only open the empty window).
@@ -87,8 +88,9 @@ namespace Klak.Wiring.Patcher
             _hierarchyChanged = true;
         }
 
+		bool _autoUpdate=false;
         void OnGUI()
-        {
+		{
             const float kBarHeight = 17;
             var width = position.width;
             var height = position.height;
@@ -117,6 +119,9 @@ namespace Klak.Wiring.Patcher
             var e = Event.current;
             if (e.type == EventType.MouseDown && e.clickCount == 1)
                 _graphGUI.ClearSelection();
+
+
+			_autoUpdate=GUILayout.Toggle(_autoUpdate,"Auto Refresh",GUILayout.Width(100));
 
             // Status bar
             GUILayout.BeginArea(new Rect(0, height - kBarHeight, width, kBarHeight));
@@ -162,6 +167,12 @@ namespace Klak.Wiring.Patcher
             GUILayout.FlexibleSpace();
             GUILayout.EndVertical();
         }
+
+		void Update()
+		{
+			if(_autoUpdate)
+				Repaint ();
+		}
 
         #endregion
     }

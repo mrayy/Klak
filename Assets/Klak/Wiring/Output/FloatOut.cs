@@ -41,12 +41,18 @@ namespace Klak.Wiring
 
         #region Node I/O
 
+		public float _value;
+
         [Inlet]
         public float input {
             set {
+				_value = value;
                 if (!enabled || _target == null || _propertyInfo == null) return;
                 _propertyInfo.SetValue(_target, value, null);
             }
+			get{
+				return _value;
+			}
         }
 
         #endregion

@@ -209,6 +209,12 @@ namespace Klak.Wiring.Patcher
         Graphs.Slot _dragSourceSlot;
         Graphs.Slot _dropTarget;
 
+		public Graphs.Slot DragSourceSlot {
+			get {
+				return _dragSourceSlot;
+			}
+		}
+
         #endregion
 
         #region Edge drawer

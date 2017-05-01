@@ -48,9 +48,19 @@ namespace Klak.Wiring.Patcher
 
 		public virtual void OnNodeUI (GraphGUI host)
 		{
-
-			foreach (var slot in this.inputSlots)
-				host.LayoutSlot(slot, slot.title, false, true, true, Styles.pinIn);
+			var src_slot = (host.edgeGUI as EdgeGUI).DragSourceSlot;
+			foreach (var slot in this.inputSlots) {
+				
+				if (src_slot != null && host.graph.CanConnect(src_slot,slot)) {
+					Styles.pinIn.fontStyle = FontStyle.Bold;
+					Styles.pinIn.normal.textColor = Color.green;
+				} else {
+					Styles.pinIn.fontStyle = FontStyle.Normal;
+					Styles.pinIn.fontSize = 10;
+					Styles.pinIn.normal.textColor = Color.black;
+				}
+				host.LayoutSlot (slot, slot.title, false, true, true, Styles.pinIn);
+			}
 
 			base.NodeUI (host);
 
