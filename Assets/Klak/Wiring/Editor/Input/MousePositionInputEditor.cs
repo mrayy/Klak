@@ -67,7 +67,6 @@ public class MouseInputNodeRenderer : Node {
 
 	public override void OnNodeUI (GraphGUI host)
 	{ 
-
 		base.OnNodeUI (host);
 		var e=this.runtimeInstance as MousePositionInput;
 		if(e.linkedObject!=null)

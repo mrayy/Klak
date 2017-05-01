@@ -63,6 +63,10 @@ namespace Klak.Wiring
         [Serializable]
         public class QuaternionEvent : UnityEvent<Quaternion> {}
 
+
+		[Serializable]
+		public class TextureEvent : UnityEvent<Texture> {}
+
         [Serializable]
         public class ColorEvent : UnityEvent<Color> {}
 

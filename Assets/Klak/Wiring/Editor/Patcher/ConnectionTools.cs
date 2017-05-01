@@ -28,6 +28,7 @@ using UnityEditor.Events;
 using System.Reflection;
 using System;
 using Graphs = UnityEditor.Graphs;
+using System.Collections.Generic;
 
 namespace Klak.Wiring.Patcher
 {
@@ -35,19 +36,48 @@ namespace Klak.Wiring.Patcher
     {
         #region Public functions
 
+		class ConnectionPair
+		{
+			public ConnectionPair(Type src,Type target)
+			{
+				sourceType=src;
+				targetType=target;
+			}
+			public Type sourceType;
+			public Type targetType;
+		}
+
+		static List<ConnectionPair> _pairs;
+
+		static void EnumTypes()
+		{
+			if (_pairs != null)
+				return;
+			_pairs = new List<ConnectionPair> ();
+
+			_pairs.Add(new ConnectionPair(typeof(UnityEvent<float>),typeof(float)));
+			_pairs.Add(new ConnectionPair(typeof(UnityEvent<Vector3>),typeof(Vector3)));
+			_pairs.Add(new ConnectionPair(typeof(UnityEvent<Quaternion>),typeof(Quaternion)));
+			_pairs.Add(new ConnectionPair(typeof(UnityEvent<Color>),typeof(Color)));
+			_pairs.Add(new ConnectionPair(typeof(UnityEvent<Texture>),typeof(Texture)));
+		}
+
         // Determine data type of a given event.
         public static Type GetEventDataType(Type eventType)
         {
-            if (typeof(UnityEvent<float     >).IsAssignableFrom(eventType)) return typeof(float);
-            if (typeof(UnityEvent<Vector3   >).IsAssignableFrom(eventType)) return typeof(Vector3);
-            if (typeof(UnityEvent<Quaternion>).IsAssignableFrom(eventType)) return typeof(Quaternion);
-            if (typeof(UnityEvent<Color     >).IsAssignableFrom(eventType)) return typeof(Color);
+			EnumTypes ();
+			foreach (var p in _pairs) {
+				if (p.sourceType.IsAssignableFrom (eventType))
+					return p.targetType;
+			}
+
             return null;
         }
 
         // Create a connection between two slots.
         public static bool ConnectSlots(Graphs.Slot fromSlot, Graphs.Slot toSlot)
         {
+			EnumTypes ();
             var nodeTo = ((Node)toSlot.node).runtimeInstance;
             var triggerEvent = GetEventOfOutputSlot(fromSlot);
             var targetMethod = GetMethodOfInputSlot(toSlot);
@@ -62,25 +92,22 @@ namespace Klak.Wiring.Patcher
                 actionType, nodeTo, targetMethod
             );
 
-            if (triggerEvent is UnityEvent)
-            {
-                // The trigger event has no parameter.
-                // Add the action to the event with a default parameter.
-                if (actionType == typeof(UnityAction))
-                {
-                    UnityEventTools.AddVoidPersistentListener(
-                        triggerEvent, (UnityAction)targetAction
-                    );
-                    return true;
-                }
-                if (actionType == typeof(UnityAction<float>))
-                {
-                    UnityEventTools.AddFloatPersistentListener(
-                        triggerEvent, (UnityAction<float>)targetAction, 1.0f
-                    );
-                    return true;
-                }
-            }
+			if (triggerEvent is UnityEvent) {
+				// The trigger event has no parameter.
+				// Add the action to the event with a default parameter.
+				if (actionType == typeof(UnityAction)) {
+					UnityEventTools.AddVoidPersistentListener (
+						triggerEvent, (UnityAction)targetAction
+					);
+					return true;
+				}
+				if (actionType == typeof(UnityAction<float>)) {
+					UnityEventTools.AddFloatPersistentListener (
+						triggerEvent, (UnityAction<float>)targetAction, 1.0f
+					);
+					return true;
+				}
+			} 
             else if (triggerEvent is UnityEvent<float>)
             {
                 // The trigger event has a float parameter.
@@ -136,7 +163,21 @@ namespace Klak.Wiring.Patcher
                     );
                     return true;
                 }
-            }
+			}
+			else if (triggerEvent is UnityEvent<Texture>)
+			{
+				// The trigger event has a color parameter.
+				// Then the target method should have a color parameter too.
+				if (actionType == typeof(UnityAction<Texture>))
+				{
+					// Add the action to the event.
+					UnityEventTools.AddPersistentListener(
+						(UnityEvent<Texture>)triggerEvent,
+						(UnityAction<Texture>)targetAction
+					);
+					return true;
+				}
+			}
 
             return false; // trigger-target mismatch
         }
@@ -193,11 +234,19 @@ namespace Klak.Wiring.Patcher
             // Only refer to the first parameter.
             var paramType = args[0].ParameterType;
 
+			if (paramType == typeof(float     )) return typeof(UnityAction<float     >);
+			if (paramType == typeof(Vector3   )) return typeof(UnityAction<Vector3   >);
+			if (paramType == typeof(Quaternion)) return typeof(UnityAction<Quaternion>);
+			if (paramType == typeof(Color     )) return typeof(UnityAction<Color     >);
+			if (paramType == typeof(Texture     )) return typeof(UnityAction<Texture>);
+
+			return null;
             // Returns one of the corrensponding action types.
-            if (paramType == typeof(float     )) return typeof(UnityAction<float     >);
-            if (paramType == typeof(Vector3   )) return typeof(UnityAction<Vector3   >);
-            if (paramType == typeof(Quaternion)) return typeof(UnityAction<Quaternion>);
-            if (paramType == typeof(Color     )) return typeof(UnityAction<Color     >);
+			EnumTypes ();
+			foreach (var p in _pairs) {
+				if (paramType == p.targetType)
+					return p.sourceType;
+			}
 
             // No one matches the method type.
             return null;
