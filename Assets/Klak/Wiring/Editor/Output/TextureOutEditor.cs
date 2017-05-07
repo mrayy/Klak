@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using Klak.Wiring.Patcher;
+using Graphs = UnityEditor.Graphs;
 
 namespace Klak.Wiring
 {
@@ -34,19 +35,31 @@ public class TextureOutputNodeRenderer : Node {
 	public TextureOutputNodeRenderer()
 	{
 	//	this.color = UnityEditor.Graphs.Styles.Color.Red;
+	}
 
+	void OnEnable()
+	{
+		
 	}
 
 	bool slots_updated=false;
+
+	UnityEditor.Graphs.Slot texSlot;
 	public override void OnNodeUI (GraphGUI host)
 	{ 
+		if (false && nodeStyle == null) {
+
+			nodeStyle = new GUIStyle (Graphs.Styles.GetNodeStyle (this.style, this.color, true));
+			nodeStyle.normal.background = Resources.Load<Texture2D> ("Character");
+			nodeStyle.fontStyle = FontStyle.Bold;
+		}
+		
 		base.OnNodeUI (host);
 		var e=this.runtimeInstance as TextureOutput;
 		var tex = e.tex;
-		if (!slots_updated) {
-			AddInputSlot("Test",typeof(Texture));
+		if (texSlot==null) {
+			texSlot=AddInputSlot("Test",typeof(Texture));
 
-			slots_updated = true;
 		}
 
 		// TODO: Check if texture is readable
@@ -56,9 +69,14 @@ public class TextureOutputNodeRenderer : Node {
 		GUILayout.Box (tex, new GUILayoutOption[] { GUILayout.Width (64), GUILayout.Height (64) });
 		GUILayout.EndHorizontal ();
 
-		var v=GetSlotValue ("Test");
-		if (v) {
-			//GUILayout.Box (v, new GUILayoutOption[] { GUILayout.Width (64), GUILayout.Height (64) });
+		if (texSlot != null) {
+			
+			var instance=(texSlot.node as Node).runtimeInstance;
+			var v = TryGetSlotPropertyValue (texSlot);
+			if (v != null) {
+			
+				GUILayout.Box (v as Texture, new GUILayoutOption[] { GUILayout.Width (64), GUILayout.Height (64) });
+			}
 		}
 
 

@@ -173,6 +173,8 @@ namespace Klak.Wiring.Patcher
             DragNodes();
         }
 
+		Texture2D windowtex;
+
 		/// <summary>
 		/// Render Graph
 		/// </summary>
@@ -182,7 +184,7 @@ namespace Klak.Wiring.Patcher
             m_Host.BeginWindows();
 
             foreach (var node in graph.nodes)
-            {
+            {/*
                 // Recapture the variable for the delegate.
                 var node2 = node;
 
@@ -191,12 +193,15 @@ namespace Klak.Wiring.Patcher
                 var style = Graphs.Styles.GetNodeStyle(node.style, node.color, isActive);
 				style.fontStyle = FontStyle.Bold;
 
+				style.normal.background = windowtex;
+
                 // Show the subwindow of this node.
                 node.position = GUILayout.Window(
                     node.GetInstanceID(), node.position,
                     delegate { NodeGUI(node2); },
-                    node.title, style, GUILayout.Width(150)
-                );
+					node.title,style, GUILayout.Width(150)
+                );*/
+				(node as Node).OnNodeDraw(this);
             }
 
             // Workaround: If there is no node in the graph, put an empty

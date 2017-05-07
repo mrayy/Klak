@@ -169,6 +169,7 @@ namespace Klak.Wiring.Patcher
 
         public void EndDragging()
         {
+			
             _dragSourceSlot = _dropTarget = null;
             _moveEdge = null;
         }

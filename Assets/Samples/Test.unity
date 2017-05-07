@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f27b31e7c400f4eb7ae78f9b3063e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wiringNodePosition: {x: 552, y: 0}
+  _wiringNodePosition: {x: 588, y: 12}
   tex: {fileID: 8400000, guid: 85d6ce7602ae72340bdc753bb9bf325c, type: 2}
   _tex:
     m_PersistentCalls:
@@ -210,8 +210,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 267819983}
-        m_MethodName: set_Input
+      - m_Target: {fileID: 1449691726}
+        m_MethodName: set_Tex
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -221,8 +221,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1449691726}
-        m_MethodName: set_Tex
+      - m_Target: {fileID: 267819983}
+        m_MethodName: set_Input
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74848ab881f6e54c8cdd5734d31d39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wiringNodePosition: {x: 852, y: -60}
+  _wiringNodePosition: {x: 900, y: -24}
   Shader: {fileID: 4800000, guid: 67de9b9107a19964ba5a0929f626d437, type: 3}
   _result:
     m_PersistentCalls:
@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 1449691725}
   - component: {fileID: 1449691726}
   m_Layer: 0
-  m_Name: Texture Output
+  m_Name: Scene Raw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1297,7 +1297,7 @@ GameObject:
   - component: {fileID: 2096114111}
   - component: {fileID: 2096114112}
   m_Layer: 0
-  m_Name: Texture Output
+  m_Name: Processed Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5806274a205fed74eafbaa46dc792c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wiringNodePosition: {x: 1176, y: -24}
+  _wiringNodePosition: {x: 1248, y: -24}
   tex: {fileID: 0}
 --- !u!1 &2109037399
 GameObject:

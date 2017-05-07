@@ -36,7 +36,7 @@ namespace Klak.Wiring.Patcher
         #region Public class methods
 
         // Factory method
-
+		protected GUIStyle nodeStyle;
 		static public Node Create(Wiring.NodeBase runtimeInstance, Type renderer) 
         {
 			
@@ -45,13 +45,34 @@ namespace Klak.Wiring.Patcher
             return node;
         }
 
+		public virtual void OnNodeDraw(GraphGUI host)
+		{
+			// Recapture the variable for the delegate.
+			var node2 = this;
+
+			// Subwindow style (active/nonactive)
+			var isActive = host.selection.Contains(this);
+			GUIStyle style = nodeStyle;
+			if (nodeStyle == null) {
+				style = Graphs.Styles.GetNodeStyle (this.style, this.color, isActive);
+			}
+
+			// Show the subwindow of this node.
+			this.position = GUILayout.Window(
+				this.GetInstanceID(), this.position,
+				delegate { host.NodeGUI(node2); },
+				this.title,style, GUILayout.Width(150)
+			);
+
+		}
+
 
 		public virtual void OnNodeUI (GraphGUI host)
 		{
 			var src_slot = (host.edgeGUI as EdgeGUI).DragSourceSlot;
 			foreach (var slot in this.inputSlots) {
 				
-				if (src_slot != null && host.graph.CanConnect(src_slot,slot)) {
+				if (src_slot != null && src_slot.isOutputSlot && host.graph.CanConnect(src_slot,slot)) {
 					Styles.pinIn.fontStyle = FontStyle.Bold;
 					Styles.pinIn.normal.textColor = Color.green;
 				} else {
