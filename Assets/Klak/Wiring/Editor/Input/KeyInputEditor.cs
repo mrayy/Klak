@@ -23,6 +23,7 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -73,4 +74,26 @@ namespace Klak.Wiring
             serializedObject.ApplyModifiedProperties();
         }
     }
+
+	[NodeRendererAttribute(typeof(KeyInput))]
+	public class KeyInputNodeRenderer : Node {
+
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as KeyInput;
+
+			GUILayout.BeginHorizontal(EditorStyles.toolbar);
+			GUILayout.Label ("Key");
+			e._keyCode=(KeyCode)EditorGUILayout.EnumPopup (e._keyCode);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+
+	[CustomEditor(typeof(KeyInputNodeRenderer))]
+	class KeyInputNodeRendererEditor : NodeEditor
+	{
+	}
+
 }

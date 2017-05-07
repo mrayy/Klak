@@ -26,6 +26,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Starter")]
+	[NodeAttribute("Input/Starter")]
     public class Starter : NodeBase
     {
         #region Node I/O

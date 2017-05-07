@@ -6,6 +6,7 @@ using System.Reflection;
 
 
 [AddComponentMenu("Klak/Wiring/Output/Texture Output")]
+[NodeAttribute("Output/Texture Output")]
 public class TextureOutput : NodeBase {
 
 	public Texture tex;

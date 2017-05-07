@@ -27,12 +27,13 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Button Input")]
+	[NodeAttribute("Input/Button Input")]
     public class ButtonInput : NodeBase
     {
         #region Editable properties
 
         [SerializeField]
-        string _buttonName = "Jump";
+        public string _buttonName = "Jump";
 
         [SerializeField]
         float _offValue = 0.0f;

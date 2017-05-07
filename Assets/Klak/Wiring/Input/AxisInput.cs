@@ -27,7 +27,8 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Axis Input")]
-    public class AxisInput : NodeBase
+	[NodeAttribute("Input/Axis Input")]
+	public class AxisInput : NodeBase
     {
         #region Editable properties
 

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Klak.Wiring;
 
-[AddComponentMenu("Klak/Wiring/Extension/Offscreen Processor")]
+[AddComponentMenu("TxKit/Image/Offscreen Processor")]
+[NodeAttribute("Image/Offscreen Processor")]
 public class OffscreenNode : NodeBase {
 
 	Texture _srcTexture;

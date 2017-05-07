@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Random Value")]
+	[NodeAttribute("Input/Random")]
     public class RandomValue : NodeBase
     {
         #region Editable properties

@@ -23,6 +23,7 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -74,5 +75,27 @@ namespace Klak.Wiring
 
             serializedObject.ApplyModifiedProperties();
         }
-    }
+	}
+	[NodeRendererAttribute(typeof(FloatFilter))]
+	public class FloatFilterNodeRenderer : Node {
+		public FloatFilterNodeRenderer()
+		{
+			//	this.color = UnityEditor.Graphs.Styles.Color.Red;
+
+		}
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as FloatFilter;
+
+			GUILayout.BeginHorizontal ();
+			EditorGUILayout.CurveField (e._responseCurve);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+	[CustomEditor(typeof(FloatFilterNodeRenderer))]
+	class FloatFilterNodeRendererEditor : NodeEditor
+	{
+	}
 }

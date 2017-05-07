@@ -27,12 +27,13 @@ using System.Reflection;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Output/Generic/Float Out")]
+	[NodeAttribute("Output/Generic/Float Out")]
     public class FloatOut : NodeBase
     {
         #region Editable properties
 
         [SerializeField]
-        Component _target;
+        public Component _target;
 
         [SerializeField]
         string _propertyName;

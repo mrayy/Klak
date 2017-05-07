@@ -26,12 +26,13 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Switching/Threshold")]
+	[NodeAttribute("Switching/Threshold")]
     public class Threshold : NodeBase
     {
         #region Editable properties
 
         [SerializeField]
-        float _threshold = 0.01f;
+        public float _threshold = 0.01f;
 
         [SerializeField]
         float _delayToOff = 0.0f;

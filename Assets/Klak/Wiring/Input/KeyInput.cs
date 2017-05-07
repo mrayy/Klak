@@ -27,12 +27,13 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Key Input")]
+	[NodeAttribute("Input/Key Input")]
     public class KeyInput : NodeBase
     {
         #region Editable properties
 
         [SerializeField]
-        KeyCode _keyCode = KeyCode.Space;
+        public KeyCode _keyCode = KeyCode.Space;
 
         [SerializeField]
         float _offValue = 0.0f;

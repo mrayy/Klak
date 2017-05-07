@@ -5,6 +5,7 @@ using Klak.Wiring;
 using System.Reflection;
 
 [AddComponentMenu("Klak/Wiring/Input/Texture Input")]
+[NodeAttribute("Input/Texture Input")]
 public class TextureInput : NodeBase {
 
 	public Texture tex;

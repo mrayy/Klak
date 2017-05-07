@@ -27,12 +27,13 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Input/Mouse Button Input")]
+	[NodeAttribute("Input/Mouse Button Input")]
     public class MouseButtonInput : NodeBase
     {
         #region Editable properties
 
         [SerializeField]
-        int _buttonIndex = 0;
+        public int _buttonIndex = 0;
 
         [SerializeField]
         float _offValue = 0.0f;

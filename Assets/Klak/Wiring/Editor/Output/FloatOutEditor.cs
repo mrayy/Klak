@@ -31,25 +31,31 @@ namespace Klak.Wiring
     [CustomEditor(typeof(FloatOut))]
     public class FloatOutEditor : GenericOutEditor<float>
     {
-    }
-}
+	}
 
-[NodeRendererAttribute(typeof(FloatOut))]
-public class FloatOutNodeRenderer : Node {
-	public FloatOutNodeRenderer()
+	[NodeRendererAttribute(typeof(FloatOut))]
+	public class FloatOutNodeRenderer : Node {
+		public FloatOutNodeRenderer()
+		{
+			//	this.color = UnityEditor.Graphs.Styles.Color.Red;
+
+		}
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as FloatOut;
+
+			e._target=UnityEditor.EditorGUILayout.ObjectField ("Component", e._target, typeof (Component),true) as Component;
+			GUILayout.BeginHorizontal ();
+			GUILayout.Label ("Value");
+			GUILayout.Label (e.input.ToString(), EditorStyles.boldLabel);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+	[CustomEditor(typeof(FloatOutNodeRenderer))]
+	class FloatOutNodeRendererEditor : NodeEditor
 	{
-		//	this.color = UnityEditor.Graphs.Styles.Color.Red;
-
 	}
-	public override void OnNodeUI (GraphGUI host)
-	{ 
-		base.OnNodeUI (host);
-		var e=this.runtimeInstance as FloatOut;
 
-		GUILayout.BeginHorizontal ();
-		GUILayout.Label ("Value");
-		GUILayout.Box (e.input.ToString(), new GUILayoutOption[] { GUILayout.MaxWidth (64), GUILayout.MaxHeight (64) });
-		GUILayout.EndHorizontal ();
-
-	}
 }

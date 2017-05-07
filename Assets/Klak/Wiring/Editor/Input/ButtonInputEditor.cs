@@ -23,6 +23,7 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -73,4 +74,28 @@ namespace Klak.Wiring
             serializedObject.ApplyModifiedProperties();
         }
     }
+
+	[NodeRendererAttribute(typeof(ButtonInput))]
+	public class ButtonInputNodeRenderer : Node {
+		
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as ButtonInput;
+
+			// TODO: Check if texture is readable
+
+			GUILayout.BeginHorizontal(EditorStyles.toolbar);
+			GUILayout.Label ("Button");
+			e._buttonName=GUILayout.TextArea (e._buttonName);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+
+	[CustomEditor(typeof(ButtonInputNodeRenderer))]
+	class ButtonInputNodeRendererEditor : NodeEditor
+	{
+	}
+
 }

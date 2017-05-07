@@ -23,12 +23,13 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(MouseButtonInput))]
-    public class MouseButtonInputEditor : Editor
+    public class MouseMouseButtonInputEditor : Editor
     {
         SerializedProperty _buttonIndex;
         SerializedProperty _offValue;
@@ -73,4 +74,30 @@ namespace Klak.Wiring
             serializedObject.ApplyModifiedProperties();
         }
     }
+
+	[NodeRendererAttribute(typeof(MouseButtonInput))]
+	public class MouseButtonInputNodeRenderer : Node {
+
+		void OnTools_OptimizeSelected() {
+			// Do something!
+		}
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as MouseButtonInput;
+
+			GUILayout.BeginHorizontal(EditorStyles.toolbar);
+			GUILayout.Label ("MouseButton");
+			string[] options =
+				new string[] {"Left","Right","Middle"};
+			e._buttonIndex=EditorGUILayout.Popup(e._buttonIndex,options);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+
+	[CustomEditor(typeof(MouseButtonInputNodeRenderer))]
+	class MouseButtonInputNodeRendererEditor : NodeEditor
+	{
+	}
 }

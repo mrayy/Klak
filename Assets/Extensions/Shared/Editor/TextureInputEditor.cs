@@ -42,14 +42,12 @@ public class TextureInputNodeRenderer : Node {
 
 		// TODO: Check if texture is readable
 
-		if (!Application.isPlaying)
-		{
-			e.tex=UnityEditor.EditorGUILayout.ObjectField ("Texture", tex, typeof (Texture),false ) as Texture;
-			return;
-		}
+			
 		GUILayout.BeginHorizontal ();
-		GUILayout.Label ("Texture");
-		var open = GUILayout.Button (tex, new GUILayoutOption[] { GUILayout.MaxWidth (64), GUILayout.MaxHeight (64) });
+		//GUILayout.Label ("Texture");
+		e.tex=UnityEditor.EditorGUILayout.ObjectField ("Texture", tex, typeof (Texture),true) as Texture;
+
+		//var open = GUILayout.Button (tex, new GUILayoutOption[] { GUILayout.MaxWidth (64), GUILayout.MaxHeight (64) });
 		GUILayout.EndHorizontal ();
 
 	}

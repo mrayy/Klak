@@ -25,6 +25,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Linq;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -104,4 +105,32 @@ namespace Klak.Wiring
             serializedObject.ApplyModifiedProperties();
         }
     }
+
+	[NodeRendererAttribute(typeof(ActiveStatusOut))]
+	public class ActiveStatusOutNodeRenderer : Node {
+
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as ActiveStatusOut;
+
+			// TODO: Check if texture is readable
+
+
+			GUILayout.BeginVertical();
+			//GUILayout.Label ("Texture");
+			e._targetComponent=UnityEditor.EditorGUILayout.ObjectField ("Component", e._targetComponent, typeof (Component),true) as Component;
+			e._targetGameObject=UnityEditor.EditorGUILayout.ObjectField ("Object", e._targetGameObject, typeof (GameObject),true) as GameObject;
+
+			//var open = GUILayout.Button (tex, new GUILayoutOption[] { GUILayout.MaxWidth (64), GUILayout.MaxHeight (64) });
+			GUILayout.EndVertical();
+
+		}
+	}
+
+	[CustomEditor(typeof(ActiveStatusOutNodeRenderer))]
+	class ActiveStatusOutNodeRendererEditor : NodeEditor
+	{
+	}
+
 }

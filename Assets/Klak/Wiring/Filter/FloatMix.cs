@@ -26,16 +26,17 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Mixing/Float Mix")]
+	[NodeAttribute("Mixing/Float Mix")]
     public class FloatMix : NodeBase
     {
         #region Editable properties
 
         public enum ModulationType {
-            Off, Add, Subtract, Multiply, Divide, Minimum, Maximum
+            Off, Add, Subtract, Multiply, Divide, Minimum, Maximum,Average
         }
 
         [SerializeField]
-        ModulationType _modulationType = ModulationType.Add;
+        public ModulationType _modulationType = ModulationType.Add;
 
         #endregion
 
@@ -85,6 +86,8 @@ namespace Klak.Wiring
                     return Mathf.Min(_inputValue, _modulationValue);
                 case ModulationType.Maximum:
                     return Mathf.Max(_inputValue, _modulationValue);
+				case ModulationType.Average:
+				return (_inputValue+_modulationValue)*0.5f;
             }
             // Off
             return _inputValue;

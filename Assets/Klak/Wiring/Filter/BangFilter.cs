@@ -6,7 +6,8 @@ using UnityEngine;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Filter/Bang Filter")]
-    public class BangFilter : NodeBase
+	[NodeAttribute("Filter/Bang Filter")]
+	 public class BangFilter : NodeBase
     {
         #region Editable properties
 

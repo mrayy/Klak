@@ -23,6 +23,7 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -58,4 +59,25 @@ namespace Klak.Wiring
             serializedObject.ApplyModifiedProperties();
         }
     }
+
+	[NodeRendererAttribute(typeof(AxisInput))]
+	public class AxisInputNodeRenderer : Node {
+
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as AxisInput;
+
+			GUILayout.BeginHorizontal(EditorStyles.toolbar);
+			GUILayout.Label ("Axis");
+			e._axisName=GUILayout.TextArea (e._axisName);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+
+	[CustomEditor(typeof(AxisInputNodeRenderer))]
+	class AxisInputNodeRendererEditor : NodeEditor
+	{
+	}
 }

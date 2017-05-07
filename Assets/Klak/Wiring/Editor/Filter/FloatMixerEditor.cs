@@ -23,6 +23,7 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -51,5 +52,27 @@ namespace Klak.Wiring
 
             serializedObject.ApplyModifiedProperties();
         }
-    }
+	}
+	[NodeRendererAttribute(typeof(FloatMix))]
+	public class FloatMixNodeRenderer : Node {
+		public FloatMixNodeRenderer()
+		{
+			//	this.color = UnityEditor.Graphs.Styles.Color.Red;
+
+		}
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as FloatMix;
+
+			GUILayout.BeginHorizontal ();
+			e._modulationType=(FloatMix.ModulationType)EditorGUILayout.EnumPopup (e._modulationType);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+	[CustomEditor(typeof(FloatMixNodeRenderer))]
+	class FloatMixNodeRendererEditor : NodeEditor
+	{
+	}
 }

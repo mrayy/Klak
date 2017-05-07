@@ -8,7 +8,7 @@ namespace Klak.Wiring
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(BangFilter))]
-    public class BangFilterEditor : Editor
+	public class BangFilterEditor : Editor
     {
         SerializedProperty _state;
         SerializedProperty _bangEvent;

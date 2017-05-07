@@ -23,6 +23,7 @@
 //
 using UnityEngine;
 using UnityEditor;
+using Klak.Wiring.Patcher;
 
 namespace Klak.Wiring
 {
@@ -74,5 +75,29 @@ namespace Klak.Wiring
 
             serializedObject.ApplyModifiedProperties();
         }
-    }
+	}
+	[NodeRendererAttribute(typeof(Toggle))]
+	public class ToggleNodeRenderer : Node {
+		public ToggleNodeRenderer()
+		{
+			//	this.color = UnityEditor.Graphs.Styles.Color.Red;
+
+		}
+		public override void OnNodeUI (GraphGUI host)
+		{ 
+			base.OnNodeUI (host);
+			var e=this.runtimeInstance as Toggle;
+
+			GUILayout.BeginHorizontal ();
+			GUILayout.Label ("State");
+			GUILayout.Label (e.State ? "ON" : "OFF",EditorStyles.boldLabel);
+			GUILayout.EndHorizontal ();
+
+		}
+	}
+	[CustomEditor(typeof(ToggleNodeRenderer))]
+	class ToggleNodeRendererEditor : NodeEditor
+	{
+	}
+
 }

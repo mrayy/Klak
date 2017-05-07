@@ -45,6 +45,15 @@ namespace Klak.Wiring
         public OutletAttribute() {}
     }
 
+	public class NodeAttribute:Attribute
+	{
+		public string path;
+		public NodeAttribute(string path)
+		{
+			this.path = path;
+		}
+	}
+
     // Base class of wiring node classes
     public class NodeBase : MonoBehaviour
     {
@@ -56,6 +65,12 @@ namespace Klak.Wiring
 
         [Serializable]
         public class FloatEvent : UnityEvent<float> {}
+
+		[Serializable]
+		public class IntEvent : UnityEvent<int> {}
+
+		[Serializable]
+		public class StringEvent : UnityEvent<string> {}
 
         [Serializable]
         public class Vector3Event : UnityEvent<Vector3> {}

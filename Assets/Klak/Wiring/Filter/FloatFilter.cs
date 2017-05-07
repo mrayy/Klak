@@ -27,15 +27,16 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Filter/Float Filter")]
+	[NodeAttribute("Filter/Float Filter")]
     public class FloatFilter : NodeBase
     {
         #region Editable properties
 
         [SerializeField]
-        AnimationCurve _responseCurve = AnimationCurve.Linear(0, 0, 1, 1);
+        public AnimationCurve _responseCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
         [SerializeField]
-        FloatInterpolator.Config _interpolator = FloatInterpolator.Config.Direct;
+        public FloatInterpolator.Config _interpolator = FloatInterpolator.Config.Direct;
 
         [SerializeField]
         float _amplitude = 1.0f;

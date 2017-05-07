@@ -60,7 +60,10 @@ namespace Klak.Wiring.Patcher
 			_pairs.Add(new ConnectionPair(typeof(UnityEvent<Quaternion>),typeof(Quaternion)));
 			_pairs.Add(new ConnectionPair(typeof(UnityEvent<Color>),typeof(Color)));
 			_pairs.Add(new ConnectionPair(typeof(UnityEvent<Texture>),typeof(Texture)));
+			_pairs.Add(new ConnectionPair(typeof(UnityEvent<string>),typeof(string)));
+			_pairs.Add(new ConnectionPair(typeof(UnityEvent<int>),typeof(int)));
 		}
+
 
         // Determine data type of a given event.
         public static Type GetEventDataType(Type eventType)
@@ -121,7 +124,35 @@ namespace Klak.Wiring.Patcher
                     );
                     return true;
                 }
-            }
+			}
+			else if (triggerEvent is UnityEvent<int>)
+			{
+				// The trigger event has a int parameter.
+				// Then the target method should have a int parameter too.
+				if (actionType == typeof(UnityAction<int>))
+				{
+					// Add the action to the event.
+					UnityEventTools.AddPersistentListener(
+						(UnityEvent<int>)triggerEvent,
+						(UnityAction<int>)targetAction
+					);
+					return true;
+				}
+			}
+			else if (triggerEvent is UnityEvent<string>)
+			{
+				// The trigger event has a string parameter.
+				// Then the target method should have a string parameter too.
+				if (actionType == typeof(UnityAction<string>))
+				{
+					// Add the action to the event.
+					UnityEventTools.AddPersistentListener(
+						(UnityEvent<string>)triggerEvent,
+						(UnityAction<string>)targetAction
+					);
+					return true;
+				}
+			}
             else if (triggerEvent is UnityEvent<Vector3>)
             {
                 // The trigger event has a Vector3 parameter.
@@ -233,12 +264,14 @@ namespace Klak.Wiring.Patcher
 
             // Only refer to the first parameter.
             var paramType = args[0].ParameterType;
-
+			 
+			if (paramType == typeof(int     )) return typeof(UnityAction<int>);
 			if (paramType == typeof(float     )) return typeof(UnityAction<float     >);
 			if (paramType == typeof(Vector3   )) return typeof(UnityAction<Vector3   >);
 			if (paramType == typeof(Quaternion)) return typeof(UnityAction<Quaternion>);
 			if (paramType == typeof(Color     )) return typeof(UnityAction<Color     >);
 			if (paramType == typeof(Texture     )) return typeof(UnityAction<Texture>);
+			if (paramType == typeof(string     )) return typeof(UnityAction<string>);
 
 			return null;
             // Returns one of the corrensponding action types.

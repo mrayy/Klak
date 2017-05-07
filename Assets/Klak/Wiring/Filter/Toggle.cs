@@ -27,6 +27,7 @@ using Klak.Math;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Switching/Toggle")]
+	[NodeAttribute("Switching/Toggle")]
     public class Toggle : NodeBase
     {
         #region Editable properties
@@ -84,6 +85,12 @@ namespace Klak.Wiring
         FloatInterpolator _value;
 
         #endregion
+
+		public bool State {
+			get {
+				return _state;
+			}
+		}
 
         #region MonoBehaviour functions
 

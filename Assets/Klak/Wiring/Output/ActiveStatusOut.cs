@@ -27,15 +27,16 @@ using System.Reflection;
 namespace Klak.Wiring
 {
     [AddComponentMenu("Klak/Wiring/Output/Component/Active Status Out")]
+	[NodeAttribute("Output/Component/Active Status Out")]
     public class ActiveStatusOut : NodeBase
     {
         #region Editable properties
 
         [SerializeField]
-        Component _targetComponent;
+        public Component _targetComponent;
 
         [SerializeField]
-        GameObject _targetGameObject;
+		public GameObject _targetGameObject;
 
         #endregion
 

@@ -25,6 +25,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System;
+using Klak.Wiring;
 
 namespace Klak.Wiring.Patcher
 {
@@ -72,18 +73,14 @@ namespace Klak.Wiring.Patcher
                 foreach(var type in assembly.GetTypes())
                 {
                     // Retrieve AddComponentMenu attributes.
-                    var attr = type.GetCustomAttributes(typeof(AddComponentMenu), true);
+                    var attr = type.GetCustomAttributes(typeof(NodeAttribute), true);
                     if (attr.Length == 0) continue;
 
-                    // Retrieve the menu label.
-                    var label = ((AddComponentMenu)attr[0]).componentMenu;
-
-                    // Chech if it's in the Wiring menu.
-                    if (!label.StartsWith("Klak/Wiring/")) continue;
+					var path = ((NodeAttribute)attr[0]).path;
 
                     // Add this to the node type list.
-                    label = "Create/" + label.Substring(12);
-                    _nodeTypes.Add(new NodeType(label, type));
+					path = "Create/" + path;
+					_nodeTypes.Add(new NodeType(path, type));
                 }
             }
         }
