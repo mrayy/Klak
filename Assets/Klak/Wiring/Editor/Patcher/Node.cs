@@ -61,7 +61,7 @@ namespace Klak.Wiring.Patcher
 			this.position = GUILayout.Window(
 				this.GetInstanceID(), this.position,
 				delegate { host.NodeGUI(node2); },
-				this.title,style, GUILayout.Width(150)
+				this.title,style, GUILayout.Width(150),GUILayout.Height(100)
 			);
 
 		}
